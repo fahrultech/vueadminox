@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Quotation from '../components/quotation';
 import Kategori from '../components/kategori';
+import Barang from '../components/barang';
+import Subkategori from '../components/subkategori';
+
 
 Vue.use(VueRouter)
 
@@ -15,6 +18,16 @@ Vue.use(VueRouter)
     path: '/quotation',
     name: 'quotation',
     component: Quotation
+  },
+  {
+    path: '/barang',
+    name: 'barang',
+    component: Barang
+  },
+  {
+    path: '/subkategori',
+    name: 'subkategori',
+    component: Subkategori
   }
   // {
   //   path: '/about',

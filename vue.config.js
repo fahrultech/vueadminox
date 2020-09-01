@@ -13,6 +13,6 @@ module.exports = {
         return config;
     },
     devServer:{
-        proxy: 'http://localhost:4501'
+        proxy: 'http://localhost:8000'
     }
 }
