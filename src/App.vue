@@ -36,7 +36,8 @@
                 <!-- item-->
                 <div class="dropdown-item noti-title">
                   <h5>
-                    <span class="badge badge-danger float-right">5</span>Notification
+                    <span class="badge badge-danger float-right">5</span
+                    >Notification
                   </h5>
                 </div>
 
@@ -75,7 +76,11 @@
                 </a>
 
                 <!-- All-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item notify-all">View All</a>
+                <a
+                  href="javascript:void(0);"
+                  class="dropdown-item notify-item notify-all"
+                  >View All</a
+                >
               </div>
             </li>
 
@@ -88,7 +93,11 @@
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <img src="./assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle" />
+                <img
+                  src="./assets/images/users/avatar-1.jpg"
+                  alt="user"
+                  class="rounded-circle"
+                />
               </a>
               <div
                 class="dropdown-menu dropdown-menu-right profile-dropdown"
@@ -129,13 +138,19 @@
           </ul>
           <ul class="list-inline menu-left mb-0">
             <li class="float-left">
-              <button class="button-menu-mobile open-left waves-light waves-effect">
+              <button
+                class="button-menu-mobile open-left waves-light waves-effect"
+              >
                 <i class="dripicons-menu"></i>
               </button>
             </li>
             <li class="hide-phone app-search">
               <form role="search" class>
-                <input type="text" placeholder="Search..." class="form-control" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  class="form-control"
+                />
                 <a href>
                   <i class="fa fa-search"></i>
                 </a>
@@ -156,10 +171,12 @@
       <!-- ============================================================== -->
       <div class="content-page">
         <!-- Start content -->
-        <router-view/>
+        <router-view />
         <!-- content -->
 
-        <footer class="footer text-right">{{ tahun }} © Sistem Penjualan. - SFE Electronics</footer>
+        <footer class="footer text-right">
+          {{ tahun }} © Sistem Penjualan. - SFE Electronics
+        </footer>
       </div>
       <!-- ============================================================== -->
       <!-- End Right content here -->
@@ -180,8 +197,20 @@ export default {
       tahun: "",
     };
   },
+  mounted(){
+     document
+      .querySelector(".button-menu-mobile")
+      .addEventListener("click", function () {
+        if(document.querySelector('body').classList.contains('enlarged')){
+            document.querySelector('body').classList.remove('enlarged');
+            return;
+        }
+        document.querySelector('body').classList.add('enlarged');
+      });
+  },
   created() {
     this.tahun = new Date().getFullYear();
+   
   },
 };
 </script>

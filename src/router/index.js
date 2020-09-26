@@ -4,11 +4,17 @@ import Quotation from '../components/quotation';
 import Kategori from '../components/kategori';
 import Barang from '../components/barang';
 import Subkategori from '../components/subkategori';
+import Dashboard from '../components/dashboard';
 
 
 Vue.use(VueRouter)
 
   const routes = [
+  {
+    path: '/',
+    name: 'dashboard',
+    component: Dashboard
+  },
   {
     path:'/kategori',
     name: 'kategori',

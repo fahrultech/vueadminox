@@ -4,9 +4,9 @@
 }
 </style>
 <template>
-  <li >
+  <li>
     <a :class="{'active' : open}" href="javascript: void(0);" @click="back">
-      <i class="fi-target"></i>
+      <i :class="icon"></i>
       <span>{{ menu.title }}</span>
       <span class="menu-arrow"></span>
     </a>
@@ -28,6 +28,7 @@ export default {
     };
   },
   props: {
+    icon: String,
     menu: {
       title: String,
       submenu: [
@@ -38,6 +39,9 @@ export default {
       ],
     },
     kunci: Boolean
+  },
+  created(){
+   
   },
   computed: {
       open(){
