@@ -1,6 +1,6 @@
 <template>
   <div class="left side-menu">
-    <div v-slimscroll="options">
+    <div v-slimscroll="options" class="slimscroll-menu" id="remove-scroll">
       <!--- Sidemenu -->
       <div id="sidebar-menu">
         <!-- Left Menu Start -->
@@ -117,7 +117,6 @@ export default {
   },
   methods: {
     hebit(val, log) {
-      console.log(val);
       const t = this.sidemenu;
       t.penjualan.isActive = false;
       t.barang.isActive = false;

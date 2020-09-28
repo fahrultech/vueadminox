@@ -1,8 +1,3 @@
-<style scoped>
-.active {
-  background-color: #64c5b1!important;
-}
-</style>
 <template>
    <li>
     <router-link :class="{'active' : open}" :to="'/'+link" @click.native="back">

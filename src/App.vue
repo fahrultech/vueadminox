@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div  :class="{enlarged : buka}" id="app">
     <!-- Begin page -->
     <div id="wrapper" class="bebek">
       <!-- Top Bar Start -->
@@ -138,7 +138,7 @@
           </ul>
           <ul class="list-inline menu-left mb-0">
             <li class="float-left">
-              <button
+              <button @click="$store.dispatch('setBuka')"
                 class="button-menu-mobile open-left waves-light waves-effect"
               >
                 <i class="dripicons-menu"></i>
@@ -195,22 +195,23 @@ export default {
   data() {
     return {
       tahun: "",
+      
     };
   },
   mounted(){
-     document
-      .querySelector(".button-menu-mobile")
-      .addEventListener("click", function () {
-        if(document.querySelector('body').classList.contains('enlarged')){
-            document.querySelector('body').classList.remove('enlarged');
-            return;
-        }
-        document.querySelector('body').classList.add('enlarged');
-      });
+    
   },
   created() {
     this.tahun = new Date().getFullYear();
    
   },
+  computed:{
+    buka(){
+      return this.$store.state.buka
+    }
+  },  
+  methods: {
+    
+  }
 };
 </script>

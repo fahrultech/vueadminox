@@ -44,15 +44,27 @@
                       </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(subkategori,index) in subkategoris" :key="subkategori.id">
-                            <td>{{ index+1 }}</td>
-                            <td>{{ subkategori.subcategory_name }}</td>
-                            <td>{{ subkategori.category_name }}</td>
-                            <td>
-                                <button class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                      <tr v-for="(subkategori,index) in subkategoris" :key="subkategori.id">
+                        <td>{{ index+1 }}</td>
+                        <td>{{ subkategori.subcategory_name }}</td>
+                        <td>{{ subkategori.category_name }}</td>
+                        <td style="text-align:center">
+                          <button
+                            type="button"
+                            @click="editSubkategori(subkategori.id)"
+                            class="btn btn-warning btn-xs"
+                          >
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button
+                            type="button"
+                            @click="hapusSubkategori(subkategori.id)"
+                            class="ml-1 btn btn-danger btn-xs"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -64,7 +76,7 @@
     </div>
     <div>
       <b-modal id="modal-subkategori" hide-footer>
-        <template v-slot:modal-title>{{ modal_title }} Subkategori</template>
+        <template v-slot:modal-title>{{ editStatus ? 'Edit' : 'Tambah' }} Subkategori</template>
         <div class="d-block text-center">
           <form @submit="insert" class="form-horizontal">
             <div class="form-group row">
@@ -88,8 +100,17 @@
             </div>
 
             <div class="float-right">
-              <button @click="closeModal" class="btn btn-light btn-sm">Close</button>
-              <button type="submit" class="ml-1 btn btn-primary btn-sm">Tambah</button>
+              <button type="button" @click="closeModal" class="btn btn-light btn-sm">Close</button>
+              <button 
+                type="submit" 
+                class="ml-1 btn btn-primary btn-sm"
+              >
+              <i 
+                class="fa"
+                :class="editStatus ? 'fa-pencil' : 'fa-plus'"
+              ></i>
+                  {{ editStatus ? 'Edit' : 'Tambah' }}
+              </button>
             </div>
           </form>
         </div>
@@ -102,41 +123,64 @@
 export default {
   data() {
     return {
-      modal_title : 'Tambah',
-      subkategoris:[],
+      subkategoris: [],
+      editStatus: false,
+      subcat_id: "",
       formData: {
         subcategory_name: "",
         category_id: 0,
       },
     };
   },
-  created(){
-      this.getSubkategoris()
+  created() {
+    this.getSubkategoris();
   },
   computed: {
     kategoris() {
       return this.$store.state.kategoris;
-    }
+    },
   },
   methods: {
     async insert(e) {
       e.preventDefault();
-      await this.$axios.post('/api/subcategory', this.formData);
+      if (!this.editStatus) {
+        await this.$axios.post("/api/subcategory", this.formData);
+      } else {
+        await this.$axios.put(
+          "/api/subcategory/" + this.subcat_id,
+          this.formData
+        );
+      }
       this.getSubkategoris();
-      this.$bvModal.hide('modal-subkategori');
+      this.$bvModal.hide("modal-subkategori");
     },
     tambahSubkategori() {
+      const f = this.formData;
+      f.subcategory_name = '';
+      f.category_id = '0';
+      this.editStatus = false;
       this.$bvModal.show("modal-subkategori");
     },
-    async getSubkategoris(){
-        const res = await this.$axios.get('/api/subcategory');
-        console.log(res.data)
-        this.subkategoris = res.data;
+    async getSubkategoris() {
+      const res = await this.$axios.get("/api/subcategory");
+      this.subkategoris = res.data;
     },
-    closeModal(e){
-        e.preventDefault()
-        this.$bvModal.hide('modal-subkategori');
-    }
+    closeModal(e) {
+      e.preventDefault();
+      this.$bvModal.hide("modal-subkategori");
+    },
+    async editSubkategori(id) {
+      this.editStatus = true;
+      const { data } = await this.$axios.get(`/api/subcategory/${id}`);
+      this.subcat_id = data.id;
+      this.formData.subcategory_name = data.subcategory_name;
+      this.formData.category_id = data.category_id;
+      this.$bvModal.show("modal-subkategori");
+    },
+    async hapusSubkategori(id) {
+      await this.$axios.delete("/api/subcategory/" + id);
+      this.getSubkategoris();
+    },
   },
 };
 </script>

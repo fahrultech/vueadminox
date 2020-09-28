@@ -6,14 +6,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    kategoris: []
+    kategoris: [],
+    barangs : [],
+    buka : false
   },
   mutations: {
     getKategori(state, payload){
       state.kategoris = payload;
+    },
+    getBarangs(state, payload){
+      state.barangs = payload
+    },
+    setBuka(state){
+      state.buka = !state.buka;
     }
   },
   actions: {
+    setBuka(context){
+      context.commit('setBuka');
+    },
     async addKategori({dispatch},payload) {
       try {
         await axios.post('/api/category', payload);
